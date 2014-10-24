@@ -1,17 +1,26 @@
 package de.ifgi.locbro;
 
-import android.app.Activity;
+import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
 
 
-public class StartActivity extends Activity {
+public class StartActivity extends ListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start);
+
+        String values[]= new String[] {"Google Map", "Navigation", "Game", "Monitor Your Children"};
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, values);
+        setListAdapter(adapter);
     }
 
 
@@ -32,5 +41,11 @@ public class StartActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onListItemClick(ListView l, View w, int position, long id){
+        String item = (String) getListAdapter().getItem(position);
+        Toast.makeText(this, item+ " selected", Toast.LENGTH_LONG).show();
     }
 }
