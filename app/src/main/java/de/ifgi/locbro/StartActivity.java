@@ -8,16 +8,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
-
+/**
+ * @author Marius Runde
+ */
 public class StartActivity extends ListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String values[]= new String[] {"Map", "Navigation", "Game", "MonitorYourChildren"};
+        String values[] = new String[]{"Map", "Navigation", "Game", "MonitorYourChildren"};
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, values);
@@ -45,28 +46,30 @@ public class StartActivity extends ListActivity {
     }
 
     @Override
-    protected void onListItemClick(ListView l, View w, int position, long id){
-        /* Spot Check test
-        String item = (String) getListAdapter().getItem(position);
-        Toast.makeText(this, item+ " selected", Toast.LENGTH_LONG).show();
-        */
-
-        //TODO: Create the activityClass for different apps.
-        switch ( position){
-            case 0:  Intent newActivity = new Intent(this, map.class);
-                startActivity(newActivity);
+    protected void onListItemClick(ListView l, View w, int position, long id) {
+        // Start the SettingsActivity for the selected application
+        Intent settingsActivity = new Intent(this, SettingsActivity.class);
+        settingsActivity.putExtra("selected_accuracy", 1); // TODO
+        switch (position) {
+            case 0:
+                settingsActivity.putExtra("app_name", this.getListAdapter().getItem(0).toString());
+                startActivity(settingsActivity);
                 break;
-            case 1:  Intent newActivity = new Intent(this, navigation.class);
-                startActivity(newActivity);
+            case 1:
+                settingsActivity.putExtra("app_name", this.getListAdapter().getItem(1).toString());
+                startActivity(settingsActivity);
                 break;
-            case 2:  Intent newActivity = new Intent(this, game.class);
-                startActivity(newActivity);
+            case 2:
+                settingsActivity.putExtra("app_name", this.getListAdapter().getItem(2).toString());
+                startActivity(settingsActivity);
                 break;
-            case 3:  Intent newActivity = new Intent(this, monitoryourchild.class);
-                startActivity(newActivity);
+            case 3:
+                settingsActivity.putExtra("app_name", this.getListAdapter().getItem(3).toString());
+                startActivity(settingsActivity);
                 break;
-            case 4:  Intent newActivity = new Intent(this, somethingelse.class);
-                startActivity(newActivity);
+            case 4:
+                settingsActivity.putExtra("app_name", this.getListAdapter().getItem(4).toString());
+                startActivity(settingsActivity);
                 break;
         }
     }

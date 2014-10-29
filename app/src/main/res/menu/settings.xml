@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".StartActivity" >
-    <item android:id="@+id/action_settings"
+    tools:context="de.ifgi.locbro.SettingsActivity" >
+    <item android:id="@+id/menu_reset_preferences"
         android:title="@string/menu_reset_preferences"
         android:orderInCategory="100"
         android:showAsAction="never" />
