@@ -18,13 +18,12 @@ public class StartActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String values[] = new String[]{"Map", "Navigation", "Game", "MonitorYourChildren"};
-
+        // Use demo application names
+        String values[] = new String[]{"Game", "Map", "MonitorYourChildren", "Navigation"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, values);
         setListAdapter(adapter);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -39,7 +38,7 @@ public class StartActivity extends ListActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.menu_reset_preferences) {
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -49,7 +48,7 @@ public class StartActivity extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id) {
         // Start the SettingsActivity for the selected application
         Intent settingsActivity = new Intent(this, SettingsActivity.class);
-        settingsActivity.putExtra("selected_accuracy", 1); // TODO
+        settingsActivity.putExtra("selected_accuracy", 0); // TODO
         switch (position) {
             case 0:
                 settingsActivity.putExtra("app_name", this.getListAdapter().getItem(0).toString());
