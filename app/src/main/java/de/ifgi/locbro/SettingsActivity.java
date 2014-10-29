@@ -23,7 +23,7 @@ import com.mapquest.android.maps.OverlayItem;
  *
  * @author Marius Runde
  */
-public class SettingsActivity extends MapActivity implements AdapterView.OnItemSelectedListener {
+public class SettingsActivity extends MapActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     /**
      * Title of the selected application
@@ -79,6 +79,7 @@ public class SettingsActivity extends MapActivity implements AdapterView.OnItemS
 
         // Setup the Button for the rules
         this.btn_rules = (Button) findViewById(R.id.btn_rules);
+        btn_rules.setOnClickListener(this);
 
         // Setup the MapView
         this.map = (MapView) findViewById(R.id.map);
@@ -183,6 +184,13 @@ public class SettingsActivity extends MapActivity implements AdapterView.OnItemS
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
         // Do nothing
+    }
+
+    @Override
+    public void onClick(View view) {
+        Intent rulesIntent = new Intent(this, RulesActivity.class);
+        rulesIntent.putExtra("app_name", this.title);
+        startActivity(rulesIntent);
     }
 
     @Override

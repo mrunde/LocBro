@@ -21,8 +21,8 @@ public class RulesActivity extends ListActivity {
         super.onCreate(savedInstanceState);
 
         // Get the Intent information
-        /*Intent intent = getIntent();
-        setTitle(getResources().getString(R.string.title_activity_rules) + intent.getStringExtra("app_name"));*/
+        Intent intent = getIntent();
+        setTitle(getResources().getString(R.string.title_activity_rules) + " " + intent.getStringExtra("app_name"));
 
         String values[] = new String[]{"Map", "Navigation", "Game", "MonitorYourChildren"};
 
