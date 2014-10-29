@@ -60,4 +60,12 @@
         android:layout_alignRight="@+id/tv_notifications"
         android:layout_alignEnd="@+id/tv_notifications" />
 
+    <com.mapquest.android.maps.MapView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/map"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_below="@+id/btn_rules"
+        android:clickable="false"
+        android:layout_alignParentBottom="true" />
+
 </RelativeLayout>

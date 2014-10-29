@@ -46,7 +46,7 @@ public class StartActivity extends ListActivity {
     }
 
     @Override
-    protected void onListItemClick(ListView l, View w, int position, long id) {
+    protected void onListItemClick(ListView l, View v, int position, long id) {
         // Start the SettingsActivity for the selected application
         Intent settingsActivity = new Intent(this, SettingsActivity.class);
         settingsActivity.putExtra("selected_accuracy", 1); // TODO
@@ -65,10 +65,6 @@ public class StartActivity extends ListActivity {
                 break;
             case 3:
                 settingsActivity.putExtra("app_name", this.getListAdapter().getItem(3).toString());
-                startActivity(settingsActivity);
-                break;
-            case 4:
-                settingsActivity.putExtra("app_name", this.getListAdapter().getItem(4).toString());
                 startActivity(settingsActivity);
                 break;
         }
