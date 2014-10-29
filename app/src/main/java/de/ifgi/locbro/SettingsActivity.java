@@ -16,7 +16,6 @@ import com.mapquest.android.maps.DefaultItemizedOverlay;
 import com.mapquest.android.maps.GeoPoint;
 import com.mapquest.android.maps.MapActivity;
 import com.mapquest.android.maps.MapView;
-import com.mapquest.android.maps.MyLocationOverlay;
 import com.mapquest.android.maps.OverlayItem;
 
 /**
@@ -51,11 +50,6 @@ public class SettingsActivity extends MapActivity implements AdapterView.OnItemS
      */
     private MapView map;
 
-    /**
-     * Real location of a user
-     */
-    private MyLocationOverlay realLocation;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +75,7 @@ public class SettingsActivity extends MapActivity implements AdapterView.OnItemS
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerAccuracy.setAdapter(arrayAdapter);
         spinnerAccuracy.setSelection(this.selectedAccuracy);
+        spinnerAccuracy.setOnItemSelectedListener(this);
 
         // Setup the Button for the rules
         this.btn_rules = (Button) findViewById(R.id.btn_rules);
@@ -97,32 +92,52 @@ public class SettingsActivity extends MapActivity implements AdapterView.OnItemS
      * Setup the real and the fake location to be displayed on the MapView
      */
     private void setupLocations() {
+        // Remove previously drawn locations (if available)
+        if (map.getOverlays().size() > 0) {
+            map.getOverlays().clear();
+            map.getController().setZoom(15);
+        }
+
+        // Get the icon for the locations
+        Drawable icon = getResources().getDrawable(R.drawable.circle);
+
         // --- Real location ---
-        this.realLocation = new MyLocationOverlay(this, map);
-        realLocation.enableMyLocation();
-        realLocation.runOnFirstFix(new Runnable() {
-            @Override
-            public void run() {
-                GeoPoint currentLocation = realLocation.getMyLocation();
-                map.getController().animateTo(currentLocation);
-                map.getController().setZoom(14);
-                map.getOverlays().add(realLocation);
-                realLocation.setFollowing(false);
-            }
-        });
+        final DefaultItemizedOverlay realOverlay = new DefaultItemizedOverlay(icon);
+        OverlayItem realOverlayItem = new OverlayItem(new GeoPoint(51.969031, 7.595659), "Real Location", "User's Location");
+        realOverlay.addItem(realOverlayItem);
+        map.getOverlays().add(realOverlay);
         // --- End of real location ---
 
-        // --- Fake location ---
-        Drawable icon = getResources().getDrawable(R.drawable.circle);
-        final DefaultItemizedOverlay fakeLocationOverlay = new DefaultItemizedOverlay(icon);
-        OverlayItem fakeLocationOverlayItem = new OverlayItem(new GeoPoint(51.963610, 7.613276), "Fake Location", null);
-        fakeLocationOverlay.addItem(fakeLocationOverlayItem);
-        map.getOverlays().add(fakeLocationOverlay);
-        // --- End of fake location ---
+        // --- Fake locations ---
+        final DefaultItemizedOverlay fakeOverlay = new DefaultItemizedOverlay(icon);
+        OverlayItem fakeOverlayItem = null;
+        switch (this.selectedAccuracy) {
+            case 0:
+                fakeOverlayItem = new OverlayItem(new GeoPoint(51.969031, 7.595659), "Fake Location", "Real Location");
+                break;
+            case 1:
+                fakeOverlayItem = new OverlayItem(new GeoPoint(51.967584, 7.599082), "Fake Location", "Neighborhood");
+                break;
+            case 2:
+                fakeOverlayItem = new OverlayItem(new GeoPoint(51.961242, 7.629426), "Fake Location", "City");
+                break;
+            case 3:
+                fakeOverlayItem = new OverlayItem(new GeoPoint(51.551928, 7.570605), "Fake Location", "Region");
+                break;
+            case 4:
+                fakeOverlayItem = new OverlayItem(new GeoPoint(51.019324, 10.366229), "Fake Location", "Country");
+                break;
+            case 5:
+                fakeOverlayItem = new OverlayItem(new GeoPoint(44.971513, -93.242928), "Fake Location", "Static Fake Location");
+                break;
+        }
+        fakeOverlay.addItem(fakeOverlayItem);
+        map.getOverlays().add(fakeOverlay);
+        // --- End of fake locations ---
 
         // Create BoundingBox to cover both locations
-        GeoPoint real = this.realLocation.getMyLocation();
-        GeoPoint fake = fakeLocationOverlay.getCenter();
+        GeoPoint real = realOverlay.getCenter();
+        GeoPoint fake = fakeOverlay.getCenter();
         if (real.getLatitude() > fake.getLatitude()) {
             double tempLat = real.getLatitude();
             real = new GeoPoint(fake.getLatitude(), real.getLongitude());
@@ -136,6 +151,7 @@ public class SettingsActivity extends MapActivity implements AdapterView.OnItemS
         BoundingBox bbox = new BoundingBox(real, fake);
         // Zoom and pan the map to the desired area
         map.getController().zoomToSpan(bbox);
+        map.getController().zoomOut();
     }
 
     @Override
@@ -151,7 +167,7 @@ public class SettingsActivity extends MapActivity implements AdapterView.OnItemS
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.menu_reset_preferences) {
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -160,13 +176,8 @@ public class SettingsActivity extends MapActivity implements AdapterView.OnItemS
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        if (view.equals(this.spinnerAccuracy)) {
-            this.selectedAccuracy = adapterView.getSelectedItemPosition();
-        } else if (view.equals(this.btn_rules)) {
-            Intent rulesIntent = new Intent(this, RulesActivity.class);
-            rulesIntent.putExtra("app_name", this.title);
-            startActivity(rulesIntent);
-        }
+        this.selectedAccuracy = adapterView.getSelectedItemPosition();
+        setupLocations();
     }
 
     @Override
