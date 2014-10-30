@@ -1,5 +1,8 @@
 package de.ifgi.locbro;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -136,23 +139,27 @@ public class SettingsActivity extends MapActivity implements AdapterView.OnItemS
         map.getOverlays().add(fakeOverlay);
         // --- End of fake locations ---
 
-        // Create BoundingBox to cover both locations
-        GeoPoint real = realOverlay.getCenter();
-        GeoPoint fake = fakeOverlay.getCenter();
-        if (real.getLatitude() > fake.getLatitude()) {
-            double tempLat = real.getLatitude();
-            real = new GeoPoint(fake.getLatitude(), real.getLongitude());
-            fake = new GeoPoint(tempLat, fake.getLongitude());
+        if (this.selectedAccuracy != 0) {
+            // Create BoundingBox to cover both locations
+            GeoPoint real = realOverlay.getCenter();
+            GeoPoint fake = fakeOverlay.getCenter();
+            if (real.getLatitude() > fake.getLatitude()) {
+                double tempLat = real.getLatitude();
+                real = new GeoPoint(fake.getLatitude(), real.getLongitude());
+                fake = new GeoPoint(tempLat, fake.getLongitude());
+            }
+            if (real.getLongitude() > fake.getLongitude()) {
+                double tempLng = real.getLongitude();
+                real = new GeoPoint(real.getLatitude(), fake.getLongitude());
+                fake = new GeoPoint(fake.getLatitude(), tempLng);
+            }
+            BoundingBox bbox = new BoundingBox(real, fake);
+            // Zoom and pan the map to the desired area
+            map.getController().zoomToSpan(bbox);
+            map.getController().zoomOut();
+        } else {
+            map.getController().animateTo(realOverlay.getCenter());
         }
-        if (real.getLongitude() > fake.getLongitude()) {
-            double tempLng = real.getLongitude();
-            real = new GeoPoint(real.getLatitude(), fake.getLongitude());
-            fake = new GeoPoint(fake.getLatitude(), tempLng);
-        }
-        BoundingBox bbox = new BoundingBox(real, fake);
-        // Zoom and pan the map to the desired area
-        map.getController().zoomToSpan(bbox);
-        map.getController().zoomOut();
     }
 
     @Override
@@ -191,6 +198,15 @@ public class SettingsActivity extends MapActivity implements AdapterView.OnItemS
         Intent rulesIntent = new Intent(this, RulesActivity.class);
         rulesIntent.putExtra("app_name", this.title);
         startActivity(rulesIntent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent resultIntent = new Intent(this, SettingsActivity.class);
+        resultIntent.putExtra("app_name", this.title);
+        resultIntent.putExtra("accuracy", this.selectedAccuracy);
+        setResult(Activity.RESULT_OK, resultIntent);
+        finish();
     }
 
     @Override
