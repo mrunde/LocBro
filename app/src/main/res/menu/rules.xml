@@ -3,8 +3,6 @@
     tools:context="de.ifgi.locbro.RulesActivity" >
     <item android:id="@+id/menu_add_rule"
         android:title="@string/menu_add_rule" />
-    <item android:id="@+id/menu_delete_rule"
-        android:title="@string/menu_delete_rule" />
     <item android:id="@+id/menu_delete_all_rules"
         android:title="@string/menu_delete_all_rules" />
 </menu>

@@ -16,6 +16,8 @@
     <string name="gui_btn_rules">Rules</string>
     <string name="gui_tv_area">Area</string>
     <string name="gui_tv_time">Time</string>
+    <string name="gui_btn_cancel">Cancel</string>
+    <string name="gui_btn_save">Save</string>
 
     <string-array name="accuracy_options">
         <item>Real Location</item>
