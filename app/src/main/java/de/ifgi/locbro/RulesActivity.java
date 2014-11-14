@@ -2,6 +2,7 @@ package de.ifgi.locbro;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,7 +33,19 @@ public class RulesActivity extends ListActivity {
 
         // Get the Intent information
         Intent intent = getIntent();
-        setTitle(getResources().getString(R.string.title_activity_rules) + " " + intent.getStringExtra("app_name"));
+        String app_name = intent.getStringExtra("app_name");
+        setTitle(getResources().getString(R.string.title_activity_rules) + " " + app_name);
+
+        // Restore the preferences
+        SharedPreferences settings = getSharedPreferences(getResources().getString(R.string.prefs_name), 0);
+        boolean goOn = true;
+        int counter = 1;
+        while (goOn) {
+            String ruleAsString = settings.getString(app_name + "_rule_" + counter, null);
+            if (ruleAsString != null) {
+                rules.add(Rule.createRuleFromString(ruleAsString));
+            }
+        }
 
         String values[] = new String[]{"Map", "Navigation", "Game", "MonitorYourChildren"}; // TODO
 
@@ -40,7 +53,6 @@ public class RulesActivity extends ListActivity {
                 android.R.layout.simple_list_item_1, values);
         setListAdapter(adapter);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

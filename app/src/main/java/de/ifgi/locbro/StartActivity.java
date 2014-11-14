@@ -15,10 +15,6 @@ import android.widget.ListView;
  */
 public class StartActivity extends ListActivity {
 
-    /**
-     * Shared preferences file name
-     */
-    public static final String PREFS_NAME = "LocBroPrefsFile";
     private static final int SETTINGS_REQUEST = 1;
     // Store the accuracies for the applications
     private int game_accuracy;
@@ -31,7 +27,7 @@ public class StartActivity extends ListActivity {
         super.onCreate(savedInstanceState);
 
         // Restore the preferences
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences settings = getSharedPreferences(getResources().getString(R.string.prefs_name), 0);
         game_accuracy = settings.getInt("Game", 0);
         map_accuracy = settings.getInt("Map", 0);
         monitorYourChildren_accuracy = settings.getInt("MonitorYourChildren", 0);
@@ -49,7 +45,7 @@ public class StartActivity extends ListActivity {
         super.onStop();
 
         // Store the preferences
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences settings = getSharedPreferences(getResources().getString(R.string.prefs_name), 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt("Game", this.game_accuracy);
         editor.putInt("Map", this.map_accuracy);

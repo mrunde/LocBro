@@ -46,7 +46,7 @@ public class SettingsActivity extends MapActivity implements AdapterView.OnItemS
     /**
      * Button for the rules
      */
-    private Button btn_rules;
+    // private Button btn_rules; TODO
 
     /**
      * MapView for the real and fake locations to be previewed
@@ -81,8 +81,8 @@ public class SettingsActivity extends MapActivity implements AdapterView.OnItemS
         spinnerAccuracy.setOnItemSelectedListener(this);
 
         // Setup the Button for the rules
-        this.btn_rules = (Button) findViewById(R.id.btn_rules);
-        btn_rules.setOnClickListener(this);
+        // this.btn_rules = (Button) findViewById(R.id.btn_rules); TODO
+        // btn_rules.setOnClickListener(this); TODO
 
         // Setup the MapView
         this.map = (MapView) findViewById(R.id.map);
