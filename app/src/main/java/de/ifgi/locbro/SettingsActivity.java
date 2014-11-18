@@ -103,11 +103,11 @@ public class SettingsActivity extends MapActivity implements AdapterView.OnItemS
         }
 
         // Get the icon for the locations
-        Drawable icon = getResources().getDrawable(R.drawable.circle);
+        Drawable icon = getResources().getDrawable(R.drawable.ic_launcher);
 
         // --- Real location ---
         final DefaultItemizedOverlay realOverlay = new DefaultItemizedOverlay(icon);
-        OverlayItem realOverlayItem = new OverlayItem(new GeoPoint(51.969031, 7.595659), "Real Location", "User's Location");
+        OverlayItem realOverlayItem = new OverlayItem(new GeoPoint(44.972,-93.243), "Real Location", "User's Location");
         realOverlay.addItem(realOverlayItem);
         map.getOverlays().add(realOverlay);
         // --- End of real location ---
@@ -117,19 +117,19 @@ public class SettingsActivity extends MapActivity implements AdapterView.OnItemS
         OverlayItem fakeOverlayItem = null;
         switch (this.selectedAccuracy) {
             case 0:
-                fakeOverlayItem = new OverlayItem(new GeoPoint(51.969031, 7.595659), "Fake Location", "Real Location");
+                fakeOverlayItem = new OverlayItem(new GeoPoint(44.972,-93.243), "Fake Location", "Real Location");
                 break;
             case 1:
-                fakeOverlayItem = new OverlayItem(new GeoPoint(51.967584, 7.599082), "Fake Location", "Neighborhood");
+                fakeOverlayItem = new OverlayItem(new GeoPoint(44.974747, -93.235353), "Fake Location", "Neighborhood");
                 break;
             case 2:
-                fakeOverlayItem = new OverlayItem(new GeoPoint(51.961242, 7.629426), "Fake Location", "City");
+                fakeOverlayItem = new OverlayItem(new GeoPoint(44.983333, -93.266667), "Fake Location", "City");
                 break;
             case 3:
-                fakeOverlayItem = new OverlayItem(new GeoPoint(51.551928, 7.570605), "Fake Location", "Region");
+                fakeOverlayItem = new OverlayItem(new GeoPoint(46, -94), "Fake Location", "Region");
                 break;
             case 4:
-                fakeOverlayItem = new OverlayItem(new GeoPoint(51.019324, 10.366229), "Fake Location", "Country");
+                fakeOverlayItem = new OverlayItem(new GeoPoint(38.883333, -77.016667), "Fake Location", "Country");
                 break;
             case 5:
                 fakeOverlayItem = new OverlayItem(new GeoPoint(44.971513, -93.242928), "Fake Location", "Static Fake Location");

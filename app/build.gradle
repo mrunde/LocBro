@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "de.ifgi.locbro"
-        minSdkVersion 16
+        minSdkVersion 10
         targetSdkVersion 20
         versionCode 1
         versionName "1.0"
@@ -20,6 +20,6 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile files('libs/mapquest-android-sdk-1.0.5.jar')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile files('src/main/libs/mapquest-android-sdk-1.0.5.jar')
 }
