@@ -49,12 +49,22 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/gui_tv_map"
+        android:id="@+id/tv_map"
+        android:layout_below="@+id/tv_notifications"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
     <com.mapquest.android.maps.MapView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/map"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:clickable="false"
         android:layout_alignParentBottom="true"
-        android:layout_below="@+id/tv_notifications" />
+        android:layout_below="@+id/tv_map" />
 
 </RelativeLayout>

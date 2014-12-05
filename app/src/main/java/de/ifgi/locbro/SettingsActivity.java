@@ -1,8 +1,6 @@
 package de.ifgi.locbro;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -11,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 
 import com.mapquest.android.maps.BoundingBox;
@@ -103,17 +100,18 @@ public class SettingsActivity extends MapActivity implements AdapterView.OnItemS
         }
 
         // Get the icon for the locations
-        Drawable icon = getResources().getDrawable(R.drawable.circle);
+        Drawable realIcon = getResources().getDrawable(R.drawable.circle_green);
+        Drawable fakeIcon = getResources().getDrawable(R.drawable.circle_red);
 
         // --- Real location ---
-        final DefaultItemizedOverlay realOverlay = new DefaultItemizedOverlay(icon);
+        final DefaultItemizedOverlay realOverlay = new DefaultItemizedOverlay(realIcon);
         OverlayItem realOverlayItem = new OverlayItem(new GeoPoint(51.969031, 7.595659), "Real Location", "User's Location");
         realOverlay.addItem(realOverlayItem);
         map.getOverlays().add(realOverlay);
         // --- End of real location ---
 
         // --- Fake locations ---
-        final DefaultItemizedOverlay fakeOverlay = new DefaultItemizedOverlay(icon);
+        final DefaultItemizedOverlay fakeOverlay = new DefaultItemizedOverlay(fakeIcon);
         OverlayItem fakeOverlayItem = null;
         switch (this.selectedAccuracy) {
             case 0:
@@ -135,11 +133,12 @@ public class SettingsActivity extends MapActivity implements AdapterView.OnItemS
                 fakeOverlayItem = new OverlayItem(new GeoPoint(44.971513, -93.242928), "Fake Location", "Static Fake Location");
                 break;
         }
-        fakeOverlay.addItem(fakeOverlayItem);
-        map.getOverlays().add(fakeOverlay);
         // --- End of fake locations ---
 
         if (this.selectedAccuracy != 0) {
+            // Display the fake location
+            fakeOverlay.addItem(fakeOverlayItem);
+            map.getOverlays().add(fakeOverlay);
             // Create BoundingBox to cover both locations
             GeoPoint real = realOverlay.getCenter();
             GeoPoint fake = fakeOverlay.getCenter();

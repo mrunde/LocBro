@@ -1,25 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- App, Prefs, and Activity names -->
     <string name="app_name">LocBro</string>
     <string name="prefs_name">LocBroPrefsFile</string>
     <string name="title_activity_settings">Settings</string>
     <string name="title_activity_rules">Rules for</string>
     <string name="title_activity_rule">New Rule</string>
 
+    <!-- Menus -->
     <string name="menu_reset_preferences">Reset Preferences</string>
     <string name="menu_add_rule">Add Rule</string>
     <string name="menu_delete_rule">Delete Rule</string>
     <string name="menu_delete_all_rules">Delete All Rules</string>
-    <string name="gui_tv_accuracy">Accuracy</string>
-    <string name="gui_checkbox_notifications">Enable Notifications</string>
-    <string name="gui_tv_notifications">Displays notifications whenever this 3rd party app requests your location.</string>
-    <string name="gui_btn_rules">Rules</string>
-    <string name="gui_tv_area">Area</string>
-    <string name="gui_tv_time">Time</string>
-    <string name="gui_btn_cancel">Cancel</string>
-    <string name="gui_btn_save">Save</string>
 
+    <!-- GUI -->
+    <string name="gui_btn_cancel">Cancel</string>
+    <string name="gui_btn_rules">Rules</string>
+    <string name="gui_btn_save">Save</string>
+    <string name="gui_checkbox_notifications">Enable Notifications</string>
+    <string name="gui_tv_accuracy">Accuracy</string>
+    <string name="gui_tv_area">Area</string>
+    <string name="gui_tv_map">Green: real location\nRed: fake location</string>
+    <string name="gui_tv_notifications">Displays notifications whenever this 3rd party app requests your location.</string>
+    <string name="gui_tv_time">Time</string>
+
+    <!-- Accuracy options -->
     <string-array name="accuracy_options">
         <item>Real Location</item>
         <item>Neighborhood</item>
