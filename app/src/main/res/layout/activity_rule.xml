@@ -28,57 +28,11 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <ToggleButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/gui_tv_area"
-        android:id="@+id/tb_area"
-        android:layout_below="@+id/spinner_accuracy"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:checked="false" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/gui_tv_area"
-        android:id="@+id/tv_area"
-        android:layout_alignTop="@+id/tb_area"
-        android:layout_toRightOf="@+id/tb_area"
-        android:layout_toEndOf="@+id/tb_area"
-        android:layout_alignBottom="@+id/tb_area"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <ToggleButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/gui_tv_time"
-        android:id="@+id/tb_time"
-        android:layout_below="@+id/tb_area"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:checked="false" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/gui_tv_time"
-        android:id="@+id/tv_time"
-        android:layout_below="@+id/tv_area"
-        android:layout_alignLeft="@+id/tv_area"
-        android:layout_alignStart="@+id/tv_area"
-        android:layout_alignBottom="@+id/tb_time"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/gui_btn_save"
-        android:id="@+id/btn_save"
+        android:id="@+id/btn_time_save"
         android:layout_above="@+id/btn_cancel"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
@@ -95,4 +49,14 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/rule_listView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/btn_time_save"
+        android:layout_below="@+id/spinner_accuracy" />
+
 </RelativeLayout>

@@ -1,27 +1,29 @@
 package de.ifgi.locbro;
 
 import android.app.Activity;
-import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.ToggleButton;
-
-import java.util.Calendar;
+import android.widget.AdapterView.OnItemClickListener;
 
 /**
  * @author Marius Runde
  */
-public class RuleActivity extends Activity implements View.OnClickListener {
+public class RuleActivity extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     /**
      * Create new rule or edit existing one
      */
     private boolean isNew;
+
 
     // Time and geo fence information
     private int start_hour;
@@ -37,6 +39,22 @@ public class RuleActivity extends Activity implements View.OnClickListener {
     private ToggleButton tb_time;
     private Button btn_cancel;
     private Button btn_save;
+    private ListView rulesListView;
+
+    //Request code
+    private static final int RULE_TIME = 1;
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+       //TODO: Store the selected accuracy
+        System.out.println(adapterView.toString());
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+        // Do nothing
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +68,7 @@ public class RuleActivity extends Activity implements View.OnClickListener {
         setupGUI();
     }
 
+
     /**
      * Setup the GUI
      */
@@ -57,6 +76,42 @@ public class RuleActivity extends Activity implements View.OnClickListener {
         // 'Accuracy' spinner
         this.spinner_accuracy = (Spinner) findViewById(R.id.spinner_accuracy);
 
+        // Setup the Spinner for the accuracy
+        this.spinner_accuracy = (Spinner) findViewById(R.id.spinner_accuracy);
+        ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(this, R.array.accuracy_options, android.R.layout.simple_spinner_item);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_accuracy.setAdapter(arrayAdapter);
+        //spinner_accuracy.setSelection(this.selectedAccuracy);
+        spinner_accuracy.setOnItemSelectedListener(this);
+
+
+        /**
+         * Set up the Listview
+         */
+        this.rulesListView = (ListView) findViewById(R.id.rule_listView);
+        ArrayAdapter<CharSequence> arrayAdapter_Rule = ArrayAdapter.createFromResource(this, R.array.accuracy_rules, android.R.layout.simple_expandable_list_item_1);
+        this.rulesListView.setAdapter(arrayAdapter_Rule);
+        this.rulesListView.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent ruleSettingActivity = null;
+                int RequestCode = 0;
+                switch (position) {
+                    case 0:
+                        ruleSettingActivity = new Intent(RuleActivity.this, TimePickerActivity.class);
+                        RequestCode = RuleActivity.this.RULE_TIME;
+                        break;
+                    case 1:
+                        //TODO: Open Geofencing Activity here
+                        break;
+                }
+
+                startActivityForResult(ruleSettingActivity, RequestCode);
+
+            }
+        });
+
+/*
         // 'Area' toggle button
         this.tb_area = (ToggleButton) findViewById(R.id.tb_area);
         tb_area.setOnClickListener(this);
@@ -64,13 +119,13 @@ public class RuleActivity extends Activity implements View.OnClickListener {
         // 'Time' toggle button
         this.tb_time = (ToggleButton) findViewById(R.id.tb_time);
         tb_time.setOnClickListener(this);
-
+*/
         // 'Cancel' button
         this.btn_cancel = (Button) findViewById(R.id.btn_cancel);
         btn_cancel.setOnClickListener(this);
 
         // 'Save' button
-        this.btn_save = (Button) findViewById(R.id.btn_save);
+        this.btn_save = (Button) findViewById(R.id.btn_time_save);
         btn_save.setOnClickListener(this);
     }
 
@@ -102,6 +157,7 @@ public class RuleActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+        /*
         if (view.equals(findViewById(R.id.tb_area))) {
             if (this.tb_area.isChecked()) {
                 // TODO store area
@@ -132,6 +188,7 @@ public class RuleActivity extends Activity implements View.OnClickListener {
             resultIntent.putExtra("lng", this.lng);
             setResult(Activity.RESULT_OK, resultIntent);
             finish();
-        }
+        }*/
     }
+
 }

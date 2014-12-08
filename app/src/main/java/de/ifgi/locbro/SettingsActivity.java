@@ -29,6 +29,11 @@ import com.mapquest.android.maps.OverlayItem;
 public class SettingsActivity extends MapActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     /**
+     * Setting_Request code
+     */
+    private static final int SETTINGS_REQUEST = 2;
+
+    /**
      * Title of the selected application
      */
     private String title;
@@ -46,12 +51,13 @@ public class SettingsActivity extends MapActivity implements AdapterView.OnItemS
     /**
      * Button for the rules
      */
-    // private Button btn_rules; TODO
+    private Button btn_rules;
 
     /**
      * MapView for the real and fake locations to be previewed
      */
     private MapView map;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +87,7 @@ public class SettingsActivity extends MapActivity implements AdapterView.OnItemS
         spinnerAccuracy.setOnItemSelectedListener(this);
 
         // Setup the Button for the rules
-        // this.btn_rules = (Button) findViewById(R.id.btn_rules); TODO
-        // btn_rules.setOnClickListener(this); TODO
+        this.btn_rules = (Button) findViewById(R.id.btn_set_rule);
 
         // Setup the MapView
         this.map = (MapView) findViewById(R.id.map);
@@ -90,6 +95,19 @@ public class SettingsActivity extends MapActivity implements AdapterView.OnItemS
         map.getController().setCenter(new GeoPoint(38.892155, -77.036195));
         map.setBuiltInZoomControls(false);
         setupLocations();
+    }
+
+    /**
+     * Open the rules activity
+     */
+    public void openRulesActivity(View view){
+
+        Intent rulesActivity = new Intent(this, RulesActivity.class);
+        rulesActivity.putExtra("app_name",this.title);
+
+        startActivityForResult(rulesActivity, this.SETTINGS_REQUEST);
+
+
     }
 
     /**
@@ -126,7 +144,7 @@ public class SettingsActivity extends MapActivity implements AdapterView.OnItemS
                 fakeOverlayItem = new OverlayItem(new GeoPoint(44.983333, -93.266667), "Fake Location", "City");
                 break;
             case 3:
-                fakeOverlayItem = new OverlayItem(new GeoPoint(46, -94), "Fake Location", "Region");
+                fakeOverlayItem = new OverlayItem(new GeoPoint(46.00, -94.00), "Fake Location", "Region");
                 break;
             case 4:
                 fakeOverlayItem = new OverlayItem(new GeoPoint(38.883333, -77.016667), "Fake Location", "Country");

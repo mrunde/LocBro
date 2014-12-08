@@ -6,7 +6,6 @@
     <string name="title_activity_settings">Settings</string>
     <string name="title_activity_rules">Rules for</string>
     <string name="title_activity_rule">New Rule</string>
-
     <string name="menu_reset_preferences">Reset Preferences</string>
     <string name="menu_add_rule">Add Rule</string>
     <string name="menu_delete_rule">Delete Rule</string>
@@ -28,5 +27,20 @@
         <item>Country</item>
         <item>Static Fake Location</item>
     </string-array>
+    <string-array name="accuracy_rules">
+        <item>Time Frame</item>
+        <item>Geofence</item>
+    </string-array>
+
+    <string name="title_setrule_btn">Set Rule</string>
+    <string name="title_btn_addrule">Add Rule</string>
+    <string name="title_activity_test">TestActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_rules2">Rules2Activity</string>
+    <string name="title_activity_time_picker">TimePickerActivity</string>
+    <string name="title_timepicker">Select the Time Frame of this Rule</string>
+    <string name="title_txt_start">Starts at:</string>
+    <string name="title_txt_end">Ends at:</string>
 
 </resources>

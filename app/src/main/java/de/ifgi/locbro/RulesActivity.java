@@ -1,6 +1,6 @@
 package de.ifgi.locbro;
 
-import android.app.ListActivity;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,7 +18,8 @@ import java.util.List;
  *
  * @author Marius Runde
  */
-public class RulesActivity extends ListActivity {
+public class RulesActivity extends Activity {
+
 
     public final static int NEW_RULE_REQUEST = 1;
 
@@ -31,11 +32,13 @@ public class RulesActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_rules);
         // Get the Intent information
         Intent intent = getIntent();
         String app_name = intent.getStringExtra("app_name");
         setTitle(getResources().getString(R.string.title_activity_rules) + " " + app_name);
 
+        /*
         // Restore the preferences
         SharedPreferences settings = getSharedPreferences(getResources().getString(R.string.prefs_name), 0);
         boolean goOn = true;
@@ -47,11 +50,24 @@ public class RulesActivity extends ListActivity {
             }
         }
 
+
         String values[] = new String[]{"Map", "Navigation", "Game", "MonitorYourChildren"}; // TODO
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, values);
         setListAdapter(adapter);
+        */
+
+    }
+
+    /**
+     * Open Add Rule Activity
+     * @param view
+     */
+    public void openAddRuleActivity(View view){
+       Intent ruleActivity = new Intent(this, RuleActivity.class);
+
+       startActivityForResult(ruleActivity, this.NEW_RULE_REQUEST);
     }
 
     @Override
@@ -77,11 +93,6 @@ public class RulesActivity extends ListActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        // TODO
     }
 
     @Override
