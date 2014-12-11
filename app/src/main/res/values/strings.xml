@@ -18,6 +18,7 @@
     <string name="gui_btn_cancel">Cancel</string>
     <string name="gui_btn_rules">Rules</string>
     <string name="gui_btn_save">Save</string>
+    <string name="gui_btn_timeframe">Time Frame</string>
     <string name="gui_checkbox_notifications">Enable Notifications</string>
     <string name="gui_tv_accuracy">Accuracy</string>
     <string name="gui_tv_area">Area</string>

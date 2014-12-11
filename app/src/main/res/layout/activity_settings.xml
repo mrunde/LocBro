@@ -55,9 +55,9 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/gui_tv_map"
         android:id="@+id/tv_map"
-        android:layout_below="@+id/tv_notifications"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_below="@+id/gui_btn_timeframe"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <com.mapquest.android.maps.MapView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/map"
@@ -66,5 +66,16 @@
         android:clickable="false"
         android:layout_alignParentBottom="true"
         android:layout_below="@+id/tv_map" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gui_btn_timeframe"
+        android:id="@+id/gui_btn_timeframe"
+        android:layout_below="@+id/tv_notifications"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

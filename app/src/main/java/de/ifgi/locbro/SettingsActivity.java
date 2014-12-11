@@ -1,6 +1,7 @@
 package de.ifgi.locbro;
 
 import android.app.Activity;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -9,7 +10,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 
 import com.mapquest.android.maps.BoundingBox;
 import com.mapquest.android.maps.DefaultItemizedOverlay;
@@ -36,14 +40,27 @@ public class SettingsActivity extends MapActivity implements AdapterView.OnItemS
     private int selectedAccuracy;
 
     /**
+     * Selected notification (enabled/disabled)
+     */
+    private boolean selectedNotification;
+
+    /**
      * Spinner for the accuracy
      */
     private Spinner spinnerAccuracy;
 
     /**
-     * Button for the rules
+     * Checkbox for the notifications
      */
-    // private Button btn_rules; TODO
+    private CheckBox checkBox;
+
+    /**
+     * Button for the time frame
+     */
+    private Button btn_timeframe;
+    // Time chosen by the user before
+    private int hour;
+    private int minute;
 
     /**
      * MapView for the real and fake locations to be previewed
@@ -68,6 +85,9 @@ public class SettingsActivity extends MapActivity implements AdapterView.OnItemS
         this.title = intent.getStringExtra("app_name");
         setTitle(this.title);
         this.selectedAccuracy = intent.getIntExtra("selected_accuracy", 0);
+        this.selectedNotification = intent.getBooleanExtra("selected_notification", false);
+        this.hour = intent.getIntExtra("selected_hour", 0);
+        this.minute = intent.getIntExtra("selected_minute", 0);
 
         // Setup the Spinner for the accuracy
         this.spinnerAccuracy = (Spinner) findViewById(R.id.spinner_accuracy);
@@ -77,9 +97,13 @@ public class SettingsActivity extends MapActivity implements AdapterView.OnItemS
         spinnerAccuracy.setSelection(this.selectedAccuracy);
         spinnerAccuracy.setOnItemSelectedListener(this);
 
-        // Setup the Button for the rules
-        // this.btn_rules = (Button) findViewById(R.id.btn_rules); TODO
-        // btn_rules.setOnClickListener(this); TODO
+        // Setup the CheckBox for the notifications
+        this.checkBox = (CheckBox) findViewById(R.id.cb_notifications);
+        checkBox.setActivated(selectedNotification);
+
+        // Setup the Button for the time frame
+        this.btn_timeframe = (Button) findViewById(R.id.gui_btn_timeframe);
+        btn_timeframe.setOnClickListener(this);
 
         // Setup the MapView
         this.map = (MapView) findViewById(R.id.map);
@@ -194,9 +218,23 @@ public class SettingsActivity extends MapActivity implements AdapterView.OnItemS
 
     @Override
     public void onClick(View view) {
-        Intent rulesIntent = new Intent(this, RulesActivity.class);
-        rulesIntent.putExtra("app_name", this.title);
-        startActivity(rulesIntent);
+        pickTime();
+    }
+
+    /**
+     * Open a TimePickerDialog to set the time frame
+     */
+    private void pickTime() {
+        TimePickerDialog tpd = new TimePickerDialog(getApplicationContext(),
+                new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int selectedHour,
+                                          int selectedMinute) {
+                        hour = selectedHour;
+                        minute = selectedMinute;
+                    }
+                }, hour, minute, true);
+        tpd.show();
     }
 
     @Override
@@ -204,6 +242,9 @@ public class SettingsActivity extends MapActivity implements AdapterView.OnItemS
         Intent resultIntent = new Intent(this, SettingsActivity.class);
         resultIntent.putExtra("app_name", this.title);
         resultIntent.putExtra("accuracy", this.selectedAccuracy);
+        resultIntent.putExtra("notification", checkBox.isActivated());
+        resultIntent.putExtra("hour", this.hour);
+        resultIntent.putExtra("minute", this.hour);
         setResult(Activity.RESULT_OK, resultIntent);
         finish();
     }
